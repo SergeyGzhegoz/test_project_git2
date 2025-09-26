@@ -47,10 +47,23 @@ class Library {
             }
         }
     }
+
+    // Статистика по книгам
+    getBookStats() {
+        const totalQuantity = this.books.reduce((accum, val) => accum + val.totalQuantity, 0);          // Всего книг
+        const availableQuantity = this.books.reduce((accum, val) => accum + val.availableQuantity, 0);  // Доступно для выдачи
+        const statistic = {
+            totalQuantity: totalQuantity,
+            availableQuantity: availableQuantity,
+            issued: totalQuantity - availableQuantity,    // Количество выданных
+            mostPopularBooks: this.books.sort((a, b) => b.borrowedBy.length - a.borrowedBy.length).slice(0, 2)   // Самые популярные книги
+        }
+        return statistic;
+    }
 }
 
-const library = new Library("Тестовая библиотека");
 
+const library = new Library("Тестовая библиотека");
 // Добавляем книги
 library.addBook("JavaScript для начинающих", "Иван Петров", 2023, "JS-001", 5);
 library.addBook("React продвинутый", "Мария Сидорова", 2024, "REACT-002", 3);
@@ -60,3 +73,4 @@ console.log(library.books);
 // Ищем книги
 const foundBooks = library.findBook("JS-001");
 console.log(foundBooks.length); // Должно вернуть 1
+console.log(library.getBookStats());
