@@ -31,6 +31,11 @@ class Library {
         }
         return newBook;
     }
+
+    // Поиск книг
+    findBook(searchTerm) {
+        return this.books.filter(book => book.title.includes(searchTerm));
+    }
 }
 
 const library = new Library("Тестовая библиотека");
@@ -40,3 +45,7 @@ library.addBook("JavaScript для начинающих", "Иван Петров
 library.addBook("React продвинутый", "Мария Сидорова", 2024, "REACT-002", 3);
 library.addBook("React продвинутый", "Мария Сидорова", 2024, "REACT-002", 1);
 console.log(library.books);
+
+// Ищем книги
+const foundBooks = library.findBook("JavaScript");
+console.log(foundBooks.length); // Должно вернуть 1
